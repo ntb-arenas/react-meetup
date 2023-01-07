@@ -3,7 +3,7 @@ import Card from "../ui/Card";
 
 const MeetupItem = (props) => {
   return (
-    <li className="max-w-[40rem] p-5">
+    <li className="max-w-[30rem] mx-auto p-5">
       <Card>
         <img src={props.image} className="rounded-t-lg" alt="" />
         <div className="p-3">

@@ -22,7 +22,7 @@ const NewMeetupPage = () => {
 
   return (
     <section>
-      <h1>Add New Meetup</h1>
+      <h1 className="p-5 text-3xl font-bold text-center text-gray-700">Add New Meetup</h1>
       <NewMeetupForm onAddMeetup={addMeetupHandler} />
     </section>
   );
