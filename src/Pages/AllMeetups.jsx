@@ -1,27 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import MeetupList from "../components/meetups/MeetupList";
-const DUMMY_DATA = [
-  {
-    id: "m1",
-    title: "This is a first meetup",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/2560px-Stadtbild_M%C3%BCnchen.jpg",
-    address: "Meetupstreet 5, 12345 Meetup City",
-    description: "This is a first, amazing meetup which you definitely should not miss. It will be a lot of fun!",
-  },
-  {
-    id: "m2",
-    title: "This is a second meetup",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/2560px-Stadtbild_M%C3%BCnchen.jpg",
-    address: "Meetupstreet 5, 12345 Meetup City",
-    description: "This is a first, amazing meetup which you definitely should not miss. It will be a lot of fun!",
-  },
-];
 
 const AllMeetupsPage = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [meetupsData, setMeetupsData] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch(`https://react-meetup-7372e-default-rtdb.europe-west1.firebasedatabase.app/meetups.json`)
+      .then((res) => res.json())
+      .then((data) => {
+        const meetup = [];
+
+        for (const key in data) {
+          meetup.push({ id: key, ...data[key] });
+        }
+
+        setIsLoading(false);
+        setMeetupsData(meetup);
+      });
+  }, []);
+
+  if (isLoading) {
+    return (
+      <section>
+        <p>Loading...</p>
+      </section>
+    );
+  }
+
   return (
     <section>
       <h1 className="p-5 text-3xl font-bold text-center text-gray-700">All Meetups</h1>
-      <MeetupList meetups={DUMMY_DATA} />
+      <MeetupList meetups={meetupsData} />
     </section>
   );
 };
